@@ -1,4 +1,9 @@
-import { CameraCapturedVideo, CameraType, CameraView, useCameraPermissions, useMicrophonePermissions } from 'expo-camera';
+import {
+  CameraCapturedVideo,
+  CameraView,
+  useCameraPermissions,
+  useMicrophonePermissions,
+} from 'expo-camera';
 import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -175,7 +180,7 @@ export default function RecordScreen() {
       <View style={styles.cameraWrapper}>
         <CameraView
           ref={cameraRef}
-          facing={CameraType.back}
+          facing="back"
           style={styles.camera}
           videoQuality="720p"
           mode="video"
