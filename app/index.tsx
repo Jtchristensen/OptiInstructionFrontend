@@ -1,9 +1,4 @@
-import {
-  CameraCapturedVideo,
-  CameraView,
-  useCameraPermissions,
-  useMicrophonePermissions,
-} from 'expo-camera';
+import { CameraView, useCameraPermissions, useMicrophonePermissions } from 'expo-camera';
 import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -39,7 +34,7 @@ export default function RecordScreen() {
   }, [requestCameraPermission, requestMicrophonePermission]);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout | undefined;
+    let timer: ReturnType<typeof setInterval> | undefined;
     if (isRecording) {
       timer = setInterval(() => {
         if (startTimeRef.current) {
@@ -63,7 +58,7 @@ export default function RecordScreen() {
   const permissionsLoaded = cameraPermission !== null && microphonePermission !== null;
   const permissionsGranted = !!cameraPermission?.granted && !!microphonePermission?.granted;
 
-  const handleRecordingFinished = (video?: CameraCapturedVideo | null) => {
+  const handleRecordingFinished = (video?: { uri?: string } | null) => {
     setIsRecording(false);
     const durationSec =
       startTimeRef.current !== null
@@ -115,12 +110,10 @@ export default function RecordScreen() {
     setIsRecording(true);
 
     try {
-      await cameraRef.current.startRecording({
+      const recording = await cameraRef.current.recordAsync({
         maxDuration: SETTINGS.maxDurationSec,
-        quality: '720p',
-        onRecordingFinished: handleRecordingFinished,
-        onRecordingError: handleRecordingError,
       });
+      handleRecordingFinished(recording);
     } catch (err) {
       handleRecordingError(err);
     }
@@ -317,5 +310,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f7fb',
     padding: 16,
     gap: 12,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#111827',
   },
 });
