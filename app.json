@@ -9,9 +9,17 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Camera access is required to record work sessions.",
+        "NSMicrophoneUsageDescription": "Microphone access is required for video recordings with audio."
+      }
     },
     "android": {
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO"
+      ],
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
