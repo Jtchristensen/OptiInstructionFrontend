@@ -54,7 +54,8 @@ export default function ResultScreen() {
     queryKey: ['recording', recordingId],
     queryFn: () => fetchRecordingStatus(recordingId),
     enabled: !!recordingId,
-    refetchInterval: (queryData) => {
+    refetchInterval: (query) => {
+      const queryData = query.state.data;
       if (!queryData) return SETTINGS.pollIntervalMs;
       return queryData.status === 'COMPLETED' || queryData.status === 'FAILED'
         ? false

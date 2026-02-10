@@ -44,7 +44,7 @@ export default function UploadScreen() {
       setProgress(0);
       setState('init');
 
-      const info = await FileSystem.getInfoAsync(videoUri, { size: true });
+      const info = await FileSystem.getInfoAsync(videoUri);
       if (!info.exists || !info.size) {
         throw new Error('Could not read video file.');
       }

@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const initRecordingResponseSchema = z.object({
   recordingId: z.string(),
   uploadUrl: z.string().url(),
-  headers: z.record(z.string()).optional(),
+  headers: z.record(z.string(), z.string()).optional(),
 });
 
 export const evidenceSchema = z
