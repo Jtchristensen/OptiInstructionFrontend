@@ -45,8 +45,11 @@ export default function UploadScreen() {
       setState('init');
 
       const info = await FileSystem.getInfoAsync(videoUri);
-      if (!info.exists || !info.size) {
-        throw new Error('Could not read video file.');
+      if (!info.exists) {
+        throw new Error('Video file does not exist.');
+      }
+      if (!info.isDirectory && info.size === 0) {
+        throw new Error('Video file is empty.');
       }
 
       const fileName = videoUri.split('/').pop() || 'recording.mp4';
